@@ -258,16 +258,6 @@ static int usb_validate_ep_cfg_data(struct usb_ep_descriptor * const ep_descr,
 				ep_cfg.ep_addr = idx;
 			}
 			if (!usb_dc_ep_check_cap(&ep_cfg)) {
-				LOG_DBG("Fixing EP address %x -> %x",
-					ep_descr->bEndpointAddress,
-					ep_cfg.ep_addr);
-				ep_descr->bEndpointAddress = ep_cfg.ep_addr;
-				ep_data[i].ep_addr = ep_cfg.ep_addr;
-				if (ep_cfg.ep_addr & USB_EP_DIR_IN) {
-					*requested_ep |= (1U << (idx + 16U));
-				} else {
-					*requested_ep |= (1U << idx);
-				}
 				LOG_DBG("endpoint 0x%x", ep_data[i].ep_addr);
 				return 0;
 			}
