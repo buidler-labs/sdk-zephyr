@@ -110,11 +110,6 @@ static void usb_transfer_work(struct k_work *item)
 		trans->buffer += bytes;
 		trans->bsize -= bytes;
 		trans->tsize += bytes;
-
-		if (!trans->bsize && trans->flags & USB_TRANS_NO_ZLP) {
-			trans->status = 0;
-			goto done;
-		}
 	} else {
 		ret = usb_dc_ep_read_wait(ep, trans->buffer, trans->bsize,
 					  &bytes);
